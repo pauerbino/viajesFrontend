@@ -45,6 +45,6 @@
   "scripts": {
     "test": "karma start test\\karma.conf.js",
     "start": "node server.js",
-    "postinstall": "grunt uglify && npm install grunt --save-dev && npm install -g grunt-cli"
+    "postinstall": "npm install grunt --save-dev && npm install -g grunt-cli && grunt uglify"
   }
 }
