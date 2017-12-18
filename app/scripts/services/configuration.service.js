@@ -2,7 +2,7 @@
 angular.module('viajesApp')
     .service('Configuration', [function () {
         var configurations = {
-            baseURL: "http://localhost:3000/api/v1"
+            baseURL: "https://viajes-backend.herokuapp.com/api/v1"
         };
 
         this.getConfiguration = function() {
