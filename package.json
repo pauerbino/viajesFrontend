@@ -42,8 +42,7 @@
   },
   "scripts": {
     "test": "karma start test\\karma.conf.js",
-    "build": "grunt build",
-    "start": "build && node server.js"
+    "start": "grunt serve && node server.js"
   }
 
 }
