@@ -18,7 +18,7 @@
     "grunt-contrib-htmlmin": "^0.4.0",
     "grunt-contrib-imagemin": "^1.0.0",
     "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-uglify": "0.7.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-filerev": "^2.1.2",
     "grunt-google-cdn": "^0.4.3",
@@ -44,7 +44,7 @@
   },
   "scripts": {
     "test": "karma start test\\karma.conf.js",
-    "start": "grunt build && node server.js",
-    "postinstall": "npm install grunt --save-dev && npm install -g grunt-cli && npm install grunt-build-control --save-dev && npm install --save-dev time-grunt && bower install --config.interactive=false"
+    "start": "node server.js",
+    "postinstall": "grunt uglify"
   }
 }
