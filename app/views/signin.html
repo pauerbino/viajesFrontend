@@ -1,0 +1,29 @@
+<h3 class="align-center font"> Registrarme </h3>
+<p class="align-center">Ya eres miembro? Por favor <a href="#!/login">inicia sesion</a> entonces.</p>
+<p class="align-center help-block">{{error}}</p>
+<div>
+    <form class="align-center form-margin one-row-form" name="signinForm" novalidate>
+        <div class="row font">
+            <div class="col-xs-12">
+                <div class="form-group" ng-class="{'has-error':signinForm.name.$invalid && signinForm.$submitted}">
+                    <label for="name">Nombre completo*</label>
+                    <input type="text" class="form-control" name="name" placeholder="Enter your name" ng-model="credentials.name" required>
+                    <p ng-show="signinForm.name.$invalid && signinForm.$submitted" class="help-block">Este campo es requerido.</p>
+                </div>
+                <div class="form-group" ng-class="{'has-error':signinForm.email.$invalid && signinForm.$submitted}">
+                    <label for="email">Email *</label>
+                    <input type="email" class="form-control" name="email" placeholder="Enter email" ng-model="credentials.email" required>
+                    <p ng-show="signinForm.email.$invalid && signinForm.$submitted" class="help-block">Ingrese un mail válido.</p>
+                </div>
+                <div class="form-group" ng-class="{'has-error':signinForm.password.$invalid && signinForm.$submitted}">
+                    <label for="password">Contraseña *</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password" ng-model="credentials.password" required>
+                    <p ng-show="signinForm.password.$invalid && signinForm.$submitted" class="help-block">La contraseña es requerida.</p>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-info btn-form" ng-click="register()">Registrarme!</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,89 @@
+<div class="two-button-headers-container font">
+    <div class="button-header" ng-click="irBusquedaVuelo()">
+        <span class="glyphicon glyphicon-chevron-left"></span><p>Buscar Vuelos</p>
+    </div>
+    <div class="button-header" ng-click="irBusquedaHoteles()">
+        <p>Buscar Hoteles</p><span class="glyphicon glyphicon-chevron-right"></span>
+    </div>
+</div>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <div class="panel-title">Búsqueda de vehículos</div>
+    </div>
+    <div class="panel-body">
+        <form class="search-form" name="busquedaAutoForm" novalidate>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':busquedaAutoForm.lugarRetiro.$invalid && busquedaAutoForm.$submitted}">
+                        <label for="lugarRetiro" class="control-label">Lugar de Retiro *</label>
+                        <ui-select allow-clear name="lugarRetiro" ng-model="busqueda.lugarRetiro" theme="bootstrap" required>
+                            <ui-select-match placeholder="Selecciona una ciudad">{{$select.selected.nombre}} {{$select.selected.pais}}</ui-select-match>
+                            <ui-select-choices repeat="item in ciudades | filter: $select.search">
+                                {{item.nombre}}, {{item.pais}}
+                            </ui-select-choices>
+                        </ui-select>
+                        <p ng-show="busquedaAutoForm.lugarRetiro.$invalid && busquedaAutoForm.$submitted" class="help-block">Debe indicar el lugar de retiro del vehículo.</p>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':busquedaAutoForm.lugarDevolucion.$invalid && busquedaAutoForm.$submitted}">
+                        <label for="lugarDevolucion" class="control-label">Lugar de Devolución *</label>
+                        <ui-select allow-clear name="lugarDevolucion" ng-model="busqueda.lugarDevolucion" theme="bootstrap" required>
+                            <ui-select-match placeholder="Selecciona una ciudad">{{$select.selected.nombre}} {{$select.selected.pais}}</ui-select-match>
+                            <ui-select-choices repeat="item in ciudades | filter: $select.search">
+                                {{item.nombre}}, {{item.pais}}
+                            </ui-select-choices>
+                        </ui-select>
+                        <p ng-show="busquedaAutoForm.lugarDevolucion.$invalid && busquedaAutoForm.$submitted" class="help-block">Debe indicar el lugar de devolución del vehículo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':(busquedaAutoForm.fechaRetiro.$invalid && busquedaAutoForm.$submitted) || errorMessage}">
+                        <label for="fechaRetiro"> Fecha de Retiro *</label>
+                        <input type="date" class="form-control" name="fechaRetiro" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaRetiro" required>
+                        <p ng-show="busquedaAutoForm.fechaRetiro.$invalid && busquedaAutoForm.$submitted" class="help-block">Debe indicar la fecha de retiro del vehículo, la cual debe ser superior al día de hoy.</p>
+                        <p ng-show="errorMessage" class="help-block">La fecha de retiro del vehículo debe ser anterior o igual a la fecha de devolución.</p>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':(busquedaAutoForm.fechaDevolucion.$invalid && busquedaAutoForm.$submitted) || errorMessage}">
+                        <label for="fechaDevolucion"> Fecha de Devolución *</label>
+                        <input type="date" class="form-control" name="fechaDevolucion" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaDevolucion" required>
+                        <p ng-show="busquedaAutoForm.fechaDevolucion.$invalid && busquedaAutoForm.$submitted" class="help-block">Debe indicar la fecha de devolución del vehículo, la cual debe ser superior al día de hoy.</p>
+                        <p ng-show="errorMessage" class="help-block">La fecha de devolución del vehículo debe ser mayor o igual a la fecha de retiro.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <button type="submit" class="btn btn-info btn-form" ng-click="buscar()"> Buscar </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="resultado-container">
+    <h4 class="font" style="margin-bottom: 30px;" ng-show="resultadoBusqueda.length > 0"> Resultados ({{resultadoBusqueda.length}})</h4>
+    <h4 class="bold" style="text-align: center;" ng-show="enBusqueda && (resultadoBusqueda.length === 0)"> No se han encontrado vehiculos para las fechas ingresadas.</h4>
+    <div class="row resultado-single" ng-repeat="auto in resultadoBusqueda">
+        <div class="thumbnail col-xs-3">
+             <img class="img-rounded" ng-src="{{auto.url}}" alt="Image not found">
+        </div>
+        <div class="col-xs-6">
+            <h4 class="bold">{{auto.marca}} {{auto.modelo}}</h4>
+            <div>{{auto.agencia.nombre}}</div>
+        </div>
+        <div class="col-xs-3 align-center">
+            <div class="precio-container">
+                <div>Por sólo</div>
+                <div class="precio-font">${{auto.monto}}</div>
+                <div> por día</div>
+            </div>
+        </div>
+        <hr/>
+    </div>
+</div>

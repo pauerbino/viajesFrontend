@@ -1,0 +1,19 @@
+<h3 class="font align-center" style="margin-bottom: 30px;">Mis Reservas</h3>
+<div class="font align-center">
+    <h4 ng-show="misPaquetes.length === 0"> Todavía no has realizado reservas </h4>
+</div>
+<div class="resultado-container">
+    <div ng-repeat="paquete in misPaquetes">
+        <div class="row">
+            <div class="col-xs-9">
+                <h3 style="color:#46b8da;font-weight:700;" class="bold">{{paquete.nombre}}</h3>
+                <h5><span class="bold">Monto:</span> {{paquete.montoTotal | currency:'$':2}}</h5>
+                <h5><span class="bold">Fecha de pago:</span> {{paquete.fechaPago| date:'yyyy-MM-dd HH:mm:ss'}}</h5>
+            </div>
+            <div class="col-xs-3 align-center">
+                <button class="btn btn-info btn-form" style="margin-top:72px;" ng-click="verPaquete(paquete._id)"> Ver mi reserva </button>
+            </div>
+        </div>
+        <hr/>
+    </div>
+</div>

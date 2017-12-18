@@ -1,0 +1,87 @@
+<div class="two-button-headers-container font">
+    <div class="button-header" ng-click="irBusquedaAuto()">
+        <span class="glyphicon glyphicon-chevron-left"></span><p>Buscar Vehículos</p>
+    </div>
+    <div class="button-header" ng-click="irBusquedaVuelo()">
+        <p>Buscar Vuelos</p><span class="glyphicon glyphicon-chevron-right"></span>
+    </div>
+</div>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <div class="panel-title">Búsqueda de hoteles</div>
+    </div>
+    <div class="panel-body">
+        <form class="search-form" name="busquedaHotelForm" novalidate>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':busquedaHotelForm.destino.$invalid && busquedaHotelForm.$submitted}">
+                        <label for="destino" class="control-label">Destino *</label>
+                        <ui-select allow-clear name="destino" ng-model="busqueda.destino" theme="bootstrap" required>
+                            <ui-select-match placeholder="Selecciona una ciudad">{{$select.selected.nombre}} {{$select.selected.pais}}</ui-select-match>
+                            <ui-select-choices repeat="item in ciudades | filter: $select.search">
+                                {{item.nombre}}, {{item.pais}}
+                            </ui-select-choices>
+                        </ui-select>
+                        <p ng-show="busquedaHotelForm.destino.$invalid && busquedaHotelForm.$submitted" class="help-block">Debe indicar el destino.</p>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':busquedaHotelForm.estrellas.$invalid && busquedaHotelForm.$submitted}">
+                        <label for="estrellas"> Estrellas</label>
+                        <select class="form-control" name="estrellas" ng-model="busqueda.estrellas" ng-options="option.name for option in opcionEstrellas">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':(busquedaHotelForm.fechaIngreso.$invalid && busquedaHotelForm.$submitted) || errorMessage}">
+                        <label for="fechaIngreso"> Fecha Ingreso *</label>
+                        <input type="date" class="form-control" name="fechaIngreso"  min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaIngreso" required>
+                        <p ng-show="busquedaHotelForm.fechaIngreso.$invalid && busquedaHotelForm.$submitted" class="help-block">Debe indicar la fecha de ingreso al hotel, la cual debe ser superior al día de hoy.</p>
+                        <p ng-show="errorMessage" class="help-block">La fecha de ingreso debe ser anterior a la fecha de salida.</p>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':(busquedaHotelForm.fechaSalida.$invalid && busquedaHotelForm.$submitted) || errorMessage}">
+                        <label for="fechaSalida"> Fecha Salida *</label>
+                        <input type="date" class="form-control" name="fechaSalida" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fechaSalida" required>
+                        <p ng-show="busquedaHotelForm.fechaSalida.$invalid && busquedaHotelForm.$submitted" class="help-block">Debe indicar la fecha de salida del hotel, la cual debe ser superior al día de hoy.</p>
+                        <p ng-show="errorMessage" class="help-block">La fecha de salida debe ser mayor a la fecha de salida.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <button type="submit" class="btn btn-info btn-form" ng-click="buscar()"> Buscar </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="resultado-container">
+    <h4 class="font" style="margin-bottom: 30px;" ng-show="resultadoBusqueda.length > 0"> Resultados ({{resultadoBusqueda.length}})</h4>
+    <h4 class="bold" style="text-align: center;" ng-show="enBusqueda && (resultadoBusqueda.length === 0)"> No se han encontrado hoteles para las fechas ingresadas.</h4>
+    <div class="row resultado-single" ng-repeat="hotel in resultadoBusqueda">
+        <div class="thumbnail col-xs-3">
+             <img class="img-rounded" ng-src="{{hotel.url}}" alt="Image not found">
+        </div>
+        <div class="col-xs-6">
+            <h4 class="bold">{{hotel.nombre}}</h4>
+            <div>{{hotel.direccion}}</div>
+            <div>{{hotel.estrellas}} Estrellas</div>
+            <p class="disponibilidad"> Quedan disponibles {{hotel.cantidadHabitacionesDisponibles}} de {{hotel.cantidadHabitaciones}} habitaciones</p>
+
+        </div>
+        <div class="col-xs-3 align-center">
+            <div class="precio-container">
+                <div>Por sólo</div>
+                <div class="precio-font">{{hotel.monto | currency:'$':2}}</div>
+                <div> por noche</div>
+            </div>
+        </div>
+        <hr/>
+    </div>
+</div>

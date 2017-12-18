@@ -1,0 +1,77 @@
+<h3  class="font" style="text-align: center" >{{paquete.nombre}}</h3>
+<div class="resultado-container"  ng-show="paquete.reservaVuelo.length > 0">
+    <h4 class="font" style="margin-bottom: 30px;"> Vuelos({{paquete.reservaVuelo.length}})</h4>
+    <div class="row resultado-single" ng-repeat="reserva in paquete.reservaVuelo">
+        <div class="thumbnail col-xs-3">
+             <img class="img-rounded" ng-src="{{reserva.vuelo.aerolinea.url}}" alt="Image not found">
+        </div>
+        <div class="col-xs-6">
+            <h4 class="bold">{{reserva.vuelo.aerolinea.name}}</h4>
+            <h5><span class="bold">Salida:</span> {{reserva.vuelo.fechaSalida| date:'medium'}} - {{reserva.vuelo.ciudadOrigen.nombre}}</h5>
+            <h5><span class="bold">Llegada:</span> {{reserva.vuelo.fechaLlegada| date:'medium'}} - {{reserva.vuelo.ciudadDestino.nombre}}</h5>
+
+        </div>
+        <div class="col-xs-3 align-center">
+            <div class="precio-container">
+                <div class="precio-font">{{reserva.vuelo.precio | currency:'$':2}}</div>
+            </div>
+        </div>
+        <hr/>
+    </div>
+    <hr/>
+</div>
+<div class="resultado-container" ng-show="paquete.reservaHotel.length > 0">
+    <h4 class="font" style="margin-bottom: 30px;"> Hoteles ({{paquete.reservaHotel.length}})</h4>
+    <div class="row resultado-single" ng-repeat="reserva in paquete.reservaHotel">
+        <div class="thumbnail col-xs-3">
+             <img class="img-rounded" ng-src="{{reserva.hotel.url}}" alt="Image not found">
+        </div>
+        <div class="col-xs-6">
+            <h4 class="bold">{{reserva.hotel.nombre}}</h4>
+            <h5><span class="bold">Dirección: </span>{{reserva.hotel.direccion}}</h5>
+            <h5><span class="bold">Estrellas: </span>{{reserva.hotel.estrellas}}</h5>
+            <h5><span class="bold">Fecha de ingreso: </span>{{reserva.fechaIngreso | date:'MMM d, y'}}</h5>
+            <h5><span class="bold">Fecha de salida: </span>{{reserva.fechaSalida | date:'MMM d, y'}}</h5>
+
+        </div>
+        <div class="col-xs-3 align-center">
+            <div class="precio-container">
+                <div class="precio-font">{{reserva.monto | currency:'$':2}}</div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+</div>
+<div class="resultado-container" ng-show="paquete.reservaAuto.length > 0">
+    <h4 class="font" style="margin-bottom: 30px;"> Vehículos ({{paquete.reservaAuto.length}})</h4>
+    <div class="row resultado-single" ng-repeat="reserva in paquete.reservaAuto">
+        <div class="thumbnail col-xs-3">
+             <img class="img-rounded" ng-src="{{reserva.auto.url}}" alt="Image not found">
+        </div>
+        <div class="col-xs-6">
+            <h4 class="bold">{{reserva.auto.marca}} {{reserva.auto.modelo}}</h4>
+            <h5><span class="bold">Agencia: </span>{{reserva.auto.agencia.nombre}}</h5>
+            <h5><span class="bold">Fecha y lugar de retiro: </span>{{reserva.fechaRetiro | date:'MMM d, y'}} - {{reserva.lugarRetiro.nombre}}, {{reserva.lugarRetiro.pais}}</h5>
+            <h5><span class="bold">Fecha y lugar de devolución: </span>{{reserva.fechaDevolucion | date:'MMM d, y'}} - {{reserva.lugarDevolucion.nombre}}, {{reserva.lugarDevolucion.pais}}</h5>
+        </div>
+        <div class="col-xs-3 align-center">
+            <div class="precio-container">
+                <div class="precio-font">{{reserva.monto | currency:'$':2}}</div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+</div>
+<div class="resultado-container" ng-show="paquete.reservaVuelo.length > 0 || paquete.reservaHotel.length > 0 || paquete.reservaAuto.length > 0">
+    <div class="row">
+        <div class="col-xs-9">
+            <h3 class="bold" style="margin-bottom: 30px;"> Total: </h3>
+        </div>
+        <div class="col-xs-3 align-center">
+            <div class="precio-container">
+                <div class="precio-font">{{paquete.montoTotal | currency:'$':2}}</div>
+                <div id="paypal-button"></div>
+            </div>
+        </div>
+    </div>
+</div>

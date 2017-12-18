@@ -1,0 +1,21 @@
+<div class="contacts">
+    <div class="my-header">
+        <h2 class="align-center margin-auto" > Usuarios </h2>
+    </div>
+
+    <table class="table table-bordered">
+      <tr>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th style="width:20px;">Acción</th>
+      </tr>
+      <tr ng-repeat="usuario in usuarios">
+        <td> {{usuario.name}} </td>
+        <td> {{usuario.email}} </td>
+        <td style="width:20px;">
+          <span style="margin-left:15px;" class="glyphicon glyphicon-remove" ng-click="borrarUsuario(usuario._id)"></span>
+        </td>
+      </tr>
+    </table>
+
+</div>

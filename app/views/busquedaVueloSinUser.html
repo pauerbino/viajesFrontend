@@ -1,0 +1,91 @@
+<div class="two-button-headers-container font">
+    <div class="button-header" ng-click="irBusquedaHotel()">
+        <span class="glyphicon glyphicon-chevron-left"></span><p>Buscar Hoteles</p>
+    </div>
+    <div class="button-header" ng-click="irBusquedaAuto()">
+        <p>Buscar Vehículos</p><span class="glyphicon glyphicon-chevron-right"></span>
+    </div>
+</div>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <div class="panel-title">Búsqueda de vuelos</div>
+    </div>
+    <div class="panel-body">
+        <form class="search-form" name="busquedaVueloForm" novalidate>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':busquedaVueloForm.origen.$invalid && busquedaVueloForm.$submitted}">
+                        <label for="origen" class="control-label">Origen *</label>
+                        <ui-select allow-clear name="origen" ng-model="busqueda.origen" theme="bootstrap" required>
+                            <ui-select-match placeholder="Selecciona una ciudad">{{$select.selected.nombre}} {{$select.selected.pais}}</ui-select-match>
+                            <ui-select-choices repeat="item in ciudades | filter: $select.search">
+                                {{item.nombre}}, {{item.pais}}
+                            </ui-select-choices>
+                        </ui-select>
+                        <p ng-show="busquedaVueloForm.origen.$invalid && busquedaVueloForm.$submitted" class="help-block">Debe indicar el lugar de origen.</p>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':busquedaVueloForm.destino.$invalid && busquedaVueloForm.$submitted}">
+                        <label for="destino" class="control-label">Destino *</label>
+                        <ui-select allow-clear name="destino" ng-model="busqueda.destino" theme="bootstrap" required>
+                            <ui-select-match placeholder="Selecciona una ciudad">{{$select.selected.nombre}} {{$select.selected.pais}}</ui-select-match>
+                            <ui-select-choices repeat="item in ciudades | filter: $select.search">
+                                {{item.nombre}}, {{item.pais}}
+                            </ui-select-choices>
+                        </ui-select>
+                        <p ng-show="busquedaVueloForm.destino.$invalid && busquedaVueloForm.$submitted" class="help-block">Debe indicar el lugar de destino.</p>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                   <div class="form-group" ng-class="{'has-error':busquedaVueloForm.fecha.$invalid && busquedaVueloForm.$submitted}">
+                        <label for="fecha"> Fecha de Vuelo *</label>
+                        <input type="date" class="form-control" name="fecha" min="{{currentDate | date: 'yyyy-MM-dd'}}" ng-model="busqueda.fecha" required>
+                        <p ng-show="busquedaVueloForm.fecha.$invalid && busquedaVueloForm.$submitted" class="help-block">Debe indicar la fecha de vuelo, la cual debe ser superior al día de hoy.</p>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group" ng-class="{'has-error':busquedaVueloForm.aerolinea.$invalid && busquedaVueloForm.$submitted}">
+                        <label for="aerolinea" class="control-label">Aerolinea</label>
+                        <ui-select allow-clear name="aerolinea" ng-model="busqueda.aerolinea" theme="bootstrap">
+                            <ui-select-match placeholder="Selecciona una aerolinea">{{$select.selected.name}} </ui-select-match>
+                            <ui-select-choices repeat="item in aerolineas | filter: $select.search">
+                                {{item.name}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div>
+                        <button type="submit" class="btn btn-info btn-form" ng-click="buscar()"> Buscar </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="resultado-container">
+    <h4 class="font" style="margin-bottom: 30px;" ng-show="resultadoBusqueda.length > 0"> Resultados ({{resultadoBusqueda.length}})</h4>
+    <h4 class="bold" style="text-align: center;" ng-show="enBusqueda && (resultadoBusqueda.length === 0)"> No se han encontrado vuelos para la fecha ingresada.</h4>
+    <div class="row resultado-single" ng-repeat="vuelo in resultadoBusqueda">
+        <div class="thumbnail col-xs-3">
+             <img class="img-rounded" ng-src="{{vuelo.aerolinea.url}}" alt="Image not found">
+        </div>
+        <div class="col-xs-6">
+            <h4><span class="bold">Salida:</span> {{vuelo.fechaSalida| date:'medium'}} - {{vuelo.ciudadOrigen.nombre}}</h4>
+            <h4><span class="bold">Llegada:</span> {{vuelo.fechaLlegada| date:'medium'}} - {{vuelo.ciudadDestino.nombre}}</h4>
+            <div>{{vuelo.aerolinea.name}}</div>
+            <p class="disponibilidad"> Quedan disponibles {{vuelo.cantPasajerosDisp}} de {{vuelo.cantPasajeros}} asientos</p>
+
+        </div>
+        <div class="col-xs-3 align-center">
+            <div class="precio-container">
+                <div>Por sólo</div>
+                <div class="precio-font">{{vuelo.precio | currency:'$':2}}</div>
+            </div>
+        </div>
+        <hr/>
+    </div>
+</div>
