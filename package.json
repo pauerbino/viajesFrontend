@@ -45,6 +45,6 @@
   "scripts": {
     "test": "karma start test\\karma.conf.js",
     "start": "grunt build && node server.js",
-    "postinstall": "npm install grunt --save-dev && npm install -g grunt-cli"
+    "postinstall": "npm install -g grunt-cli"
   }
 }
